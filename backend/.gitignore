@@ -1,0 +1,43 @@
+### Spring Boot / Maven ###
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Maven Wrapper ###
+.mvn/
+mvnw
+mvnw.cmd
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+### Eclipse ###
+.classpath
+.project
+.settings/
+bin/
+
+### VS Code ###
+.vscode/
+
+### Logs ###
+logs/
+*.log
+spring.log
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Application config with secrets ###
+src/main/resources/application-prod.properties
+src/main/resources/application-local.properties
