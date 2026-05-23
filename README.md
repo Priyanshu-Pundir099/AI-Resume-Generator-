@@ -81,25 +81,6 @@ React → Axios → Spring Controller → Service → OllamaAiService → DeepSe
 
 ---
 
-## MySQL Setup
-
-```sql
--- Option 1: Auto-created by Spring Boot on first run (recommended)
--- Just ensure MySQL is running and credentials match application.properties
-
--- Option 2: Manual setup
-CREATE DATABASE resume_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
--- Then run schema.sql
-```
-
-Update `backend/src/main/resources/application.properties` with your credentials:
-
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/resume_db?createDatabaseIfNotExist=true
-spring.datasource.username=root
-spring.datasource.password=your_password
-```
-
 ---
 
 ## Ollama + DeepSeek Setup
