@@ -54,6 +54,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- H2 (in-memory) for local/dev runs when MySQL isn't available -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- JWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

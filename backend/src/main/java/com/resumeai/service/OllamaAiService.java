@@ -33,7 +33,12 @@ public class OllamaAiService {
 
     public String generateResume(ResumeDTO.GenerateRequest request) {
         String prompt = buildPrompt(request);
-        return callOllama(prompt);
+        try {
+            return callOllama(prompt);
+        } catch (Exception e) {
+            logger.warn("Ollama unavailable or failed — falling back to local generator: {}", e.getMessage());
+            return generateFallbackResume(request);
+        }
     }
 
     private String buildPrompt(ResumeDTO.GenerateRequest req) {
@@ -137,5 +142,43 @@ public class OllamaAiService {
         // Normalize excessive newlines
         text = text.replaceAll("\n{3,}", "\n\n");
         return text.trim();
+    }
+
+    private String generateFallbackResume(ResumeDTO.GenerateRequest req) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== PROFESSIONAL SUMMARY ===\n");
+        sb.append(req.getFullName() != null ? req.getFullName() + " — " : "Candidate — ");
+        sb.append("Experienced professional targeting ");
+        sb.append(req.getJobRole() != null ? req.getJobRole() : "the specified role");
+        sb.append(".\n\n");
+
+        sb.append("=== SKILLS ===\n");
+        sb.append(req.getSkills() != null ? req.getSkills() : "Not provided");
+        sb.append("\n\n");
+
+        sb.append("=== WORK EXPERIENCE ===\n");
+        sb.append(req.getExperience() != null ? req.getExperience() : "No detailed experience provided. Use this section to list past roles and achievements.");
+        sb.append("\n\n");
+
+        sb.append("=== PROJECTS ===\n");
+        sb.append(req.getProjects() != null ? req.getProjects() : "None listed");
+        sb.append("\n\n");
+
+        sb.append("=== EDUCATION ===\n");
+        sb.append(req.getEducation() != null ? req.getEducation() : "Not provided");
+        sb.append("\n\n");
+
+        sb.append("=== CERTIFICATIONS ===\n");
+        sb.append(req.getCertifications() != null ? req.getCertifications() : "None");
+        sb.append("\n\n");
+
+        sb.append("=== ACHIEVEMENTS ===\n");
+        sb.append(req.getAchievements() != null ? req.getAchievements() : "None");
+        sb.append("\n\n");
+
+        sb.append("=== INSTRUCTIONS ===\n");
+        sb.append("This is a locally generated fallback resume. Replace with content produced by the AI when Ollama is available.");
+
+        return sb.toString();
     }
 }
